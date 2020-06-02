@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -25,12 +26,12 @@ public class MapFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+
         mapViewModel =
                 ViewModelProviders.of(this).get(MapViewModel.class);
         View root = inflater.inflate(R.layout.fragment_map, container, false);
-        final Button btnMap = root.findViewById(R.id.btnMap);
-        final EditText etAddress = root.findViewById(R.id.etAddress);
         mapViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>()
+
 
 
         {
@@ -41,14 +42,6 @@ public class MapFragment extends Fragment {
 
         });
 
-        btnMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + etAddress.getText().toString().trim()));
-                startActivity(intent);
-            }
-        });
         return root;
     }
 }
