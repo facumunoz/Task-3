@@ -37,7 +37,7 @@ public class MapsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_maps, container, false);
- 
+
     }
 
     @Override
