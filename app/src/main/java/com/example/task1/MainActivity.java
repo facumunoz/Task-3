@@ -47,19 +47,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        client = LocationServices.getFusedLocationProviderClient(this);
-
-        if (ActivityCompat.checkSelfPermission(MainActivity.this, 
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            getCurrentLocation();
         }
     }
 
-    private void getCurrentLocation() {
 
-
-    }
-
-}
