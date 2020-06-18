@@ -1,43 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    tools:context=".LocationInfo">
+    android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/tvName"
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="10dp"
         android:gravity="center_horizontal"
-        android:text="Name"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        tools:context=".LocationInfo">
 
-    <TextView
-        android:id="@+id/tvDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginRight="30dp"
-        android:gravity="center_horizontal"
-        android:text="TextView" />
+        <TableRow
+            android:id="@+id/name_row"
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
 
-    <TextView
-        android:id="@+id/tvNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        android:gravity="center_horizontal"
-        android:text="TextView" />
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal"
+                android:text="Name"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </TableRow>
 
-</LinearLayout>
+        <TableRow
+            android:id="@+id/graph_row"
+            android:layout_width="300dp"
+            android:layout_height="300dp">
+
+            <HorizontalScrollView
+                android:id="@+id/chart_scroll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/lincharts"
+                    android:layout_width="match_parent"
+                    android:layout_height="600dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp">
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/chart2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp">
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+        </TableRow>
+
+    </TableLayout>
+</ScrollView>

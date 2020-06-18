@@ -1,6 +1,6 @@
 package com.example.task1;
 
-class Locations {
+public class Locations {
     private String name;
     private double latitude;
     private double longitude;

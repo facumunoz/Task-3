@@ -186,6 +186,7 @@ public class MapsFragment extends Fragment {
                     mapFragment.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
+
                             Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
                             mMap = googleMap;
