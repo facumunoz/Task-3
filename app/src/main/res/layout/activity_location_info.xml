@@ -49,21 +49,33 @@
                     android:layout_height="600dp"
                     android:orientation="horizontal">
 
-                    <RelativeLayout
-                        android:id="@+id/chart"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp">
+                        android:orientation="vertical">
 
-                    </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/chart"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp">
 
-                    <RelativeLayout
-                        android:id="@+id/chart2"
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp">
+                        android:orientation="vertical">
 
-                    </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/chart2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp">
+
+                        </RelativeLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
             </HorizontalScrollView>

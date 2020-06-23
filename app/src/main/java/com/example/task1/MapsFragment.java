@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,6 +40,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -60,8 +62,8 @@ public class MapsFragment extends Fragment {
     private GoogleMap mMap;
     List<Address> addresses;
     TextView tvInfo;
-   // ArrayList<Address> addressArrayList;
-    ArrayList<String> names = new ArrayList<String>();
+    ArrayList<Address> addressArrayList = new ArrayList<Address>();
+    //ArrayList<String> names = new ArrayList<String>();
 
 
 
@@ -140,6 +142,8 @@ public class MapsFragment extends Fragment {
 
                             Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
+                            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
                             mMap = googleMap;
                             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                             mMap.addMarker(new MarkerOptions().position(latLng).title("Your Location"));
@@ -148,37 +152,41 @@ public class MapsFragment extends Fragment {
                                 try {
                                     addresses = geocoder.getFromLocation(ApplicationClass.locations.get(i).getLatitude(), ApplicationClass.locations.get(i).getLongitude(), 1);
                                     Address address = addresses.get(0);
-                                    names.add(address.getFeatureName());
+                                    addressArrayList.add(address);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
                                 Marker marker = mMap.addMarker(new MarkerOptions()
                                         .icon(BitmapDescriptorFactory.defaultMarker((float) Math.random() * 300))
                                         .anchor(0.0f, 1.0f)
-                                        .title(names.get(i))
+                                        .title(addressArrayList.get(i).getFeatureName())
                                         .position(new LatLng(ApplicationClass.locations.get(i).getLatitude(), ApplicationClass.locations.get(i).getLongitude())));
                                 marker.showInfoWindow();
+                                marker.setTag(i);
+
+                                builder.include(new LatLng(ApplicationClass.locations.get(i).getLatitude(), ApplicationClass.locations.get(i).getLongitude()));
 
                             }
 
                             mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                                 @Override
                                 public void onInfoWindowClick(Marker marker) {
+                                    int tag = (int) marker.getTag();
                                     Intent intent = new Intent(getActivity(), com.example.task1.LocationInfo.class);
                                     intent.putExtra("Name", marker.getTitle());
+                                    intent.putExtra("Phone", addressArrayList.get(tag).getPhone());
+                                    intent.putExtra("Url", addressArrayList.get(tag).getUrl());
                                     startActivity(intent);
 
                                 }
                             });
 
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                            CameraPosition cameraPosition = new CameraPosition.Builder()
-                                    .target(latLng)
-                                    .zoom(17)
-                                    .bearing(0)
-                                    .tilt(30)
-                                    .build();
-                            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                            builder.include(latLng);
+                            LatLngBounds bounds = builder.build();
+                            int padding = 40;
+                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+
+                            mMap.animateCamera(cu);
                         }
                     });
                 } else {
@@ -191,41 +199,48 @@ public class MapsFragment extends Fragment {
 
                             mMap = googleMap;
 
+                            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+
                             for (int i = 0; i < ApplicationClass.locations.size(); i += 1) {
                                 try {
                                     addresses = geocoder.getFromLocation(ApplicationClass.locations.get(i).getLatitude(), ApplicationClass.locations.get(i).getLongitude(), 1);
                                     Address address = addresses.get(0);
-                                    names.add(address.getFeatureName());
+                                    addressArrayList.add(address);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
                                 Marker marker = mMap.addMarker(new MarkerOptions()
                                         .icon(BitmapDescriptorFactory.defaultMarker((float) Math.random() * 300))
                                         .anchor(0.0f, 1.0f)
-                                        .title(names.get(i))
+                                        .title(addressArrayList.get(i).getFeatureName())
                                         .position(new LatLng(ApplicationClass.locations.get(i).getLatitude(), ApplicationClass.locations.get(i).getLongitude())));
                                 marker.showInfoWindow();
+                                marker.setTag(i);
+
+                                builder.include(new LatLng(ApplicationClass.locations.get(i).getLatitude(), ApplicationClass.locations.get(i).getLongitude()));
 
                             }
 
                             mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                                 @Override
                                 public void onInfoWindowClick(Marker marker) {
+                                    int tag = (int) marker.getTag();
                                     Intent intent = new Intent(getActivity(), com.example.task1.LocationInfo.class);
                                     intent.putExtra("Name", marker.getTitle());
+                                    intent.putExtra("Phone", addressArrayList.get(tag).getPhone());
+                                    intent.putExtra("Url", addressArrayList.get(tag).getUrl());
                                     startActivity(intent);
 
                                 }
                             });
 
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(41.703027, -86.238955)));
-                            CameraPosition cameraPosition = new CameraPosition.Builder()
-                                    .target(new LatLng(41.703027, -86.238955))
-                                    .zoom(17)
-                                    .bearing(0)
-                                    .tilt(30)
-                                    .build();
-                            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                            LatLngBounds bounds = builder.build();
+                            int padding = 40;
+                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+
+                            mMap.animateCamera(cu);
 
                         }
                     });
